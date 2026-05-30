@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Love Calculator</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            text-align:center;
+            margin-top:50px;
+        }
+
+        input{
+            padding:10px;
+            margin:10px;
+            width:200px;
+        }
+
+        button{
+            padding:10px 20px;
+            cursor:pointer;
+        }
+
+        #result{
+            margin-top:20px;
+            font-size:24px;
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>❤️ Love Calculator ❤️</h1>
+
+<input type="text" id="name1" placeholder="First Name">
+<br>
+
+<input type="text" id="name2" placeholder="Second Name">
+<br>
+
+<button onclick="calculateLove()">Calculate</button>
+
+<div id="result"></div>
+
+<script>
+
+function calculateLove(){
+
+    let name1 = document.getElementById("name1").value.toLowerCase();
+    let name2 = document.getElementById("name2").value.toLowerCase();
+
+    let combined = name1 + name2;
+
+    let trueScore =
+        (combined.match(/t/g)||[]).length +
+        (combined.match(/r/g)||[]).length +
+        (combined.match(/u/g)||[]).length +
+        (combined.match(/e/g)||[]).length;
+
+    let loveScore =
+        (combined.match(/l/g)||[]).length +
+        (combined.match(/o/g)||[]).length +
+        (combined.match(/v/g)||[]).length +
+        (combined.match(/e/g)||[]).length;
+
+    let total = parseInt(String(trueScore) + String(loveScore));
+
+    total = Math.min(total,100);
+
+    document.getElementById("result").innerHTML =
+        "Love Score = " + total + "%";
+}
+
+</script>
+
+</body>
+</html>
