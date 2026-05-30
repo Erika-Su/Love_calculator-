@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Love Calculator 💖</title>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<style>
+
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: radial-gradient(circle at top, #140010, #000);
+  overflow:hidden;
+  font-family:Arial;
+  color:white;
+}
+
+/* CARD */
+.card{
+  width:360px;
+  padding:25px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(15px);
+  text-align:center;
+  box-shadow:0 0 30px rgba(255,0,100,0.2);
+}
+
+h1{
+  color:#ff7ac6;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:10px;
+  border:none;
+  outline:none;
+}
+
+button{
+  padding:12px 18px;
+  border:none;
+  border-radius:25px;
+  background:#ff4da6;
+  color:white;
+  cursor:pointer;
+}
+
+/* RESULT */
+#result{
+  margin-top:20px;
+  font-size:20px;
+  min-height:50px;
+}
+
+/* SHARE CARD */
+#card{
+  display:none;
+  margin-top:15px;
+  padding:15px;
+  border-radius:15px;
+  background:black;
+  border:1px solid #ff4da6;
+}
+
+.musicBtn{
+  position:fixed;
+  top:10px;
+  right:10px;
+  background:#111;
+  padding:10px;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+/* petals */
+.petal{
+  position:absolute;
+  top:-10%;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh);
+    opacity:0;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d1c5e6b7b6.mp3?filename=soft-jazz-piano-ambient-110397.mp3">
+</audio>
+
+<div class="musicBtn" onclick="toggleMusic()">🎵</div>
+
+<div class="card">
+
+<h1>💖 Love Calculator</h1>
+
+<input id="name1" placeholder="Your Name">
+<input id="name2" placeholder="Crush Name">
+
+<button onclick="calculateLove()">Calculate 💘</button>
+
+<div id="result"></div>
+
+<div id="card">
+  <h3>💖 Result Card</h3>
+  <p id="cardText"></p>
+</div>
+
+<button onclick="share()">Share 💌</button>
+
+</div>
+
+<script>
+
+let music=document.getElementById("music");
+let playing=false;
+
+function toggleMusic(){
+  if(!playing){
+    music.play();
+    playing=true;
+  } else {
+    music.pause();
+    playing=false;
+  }
+}
+
+/* ===== YOUR ORIGINAL LOGIC (UNCHANGED) ===== */
+function calculateLove(){
+
+    let name1 = document.getElementById("name1").value.toLowerCase();
+    let name2 = document.getElementById("name2").value.toLowerCase();
+
+    let combined = name1 + name2;
+
+    let trueScore =
+        (combined.match(/t/g)||[]).length +
+        (combined.match(/r/g)||[]).length +
+        (combined.match(/u/g)||[]).length +
+        (combined.match(/e/g)||[]).length;
+
+    let loveScore =
+        (combined.match(/l/g)||[]).length +
+        (combined.match(/o/g)||[]).length +
+        (combined.match(/v/g)||[]).length +
+        (combined.match(/e/g)||[]).length;
+
+    let total = parseInt(String(trueScore) + String(loveScore));
+
+    total = Math.min(total,100);
+
+/* ===== UI ONLY ADDITION ===== */
+
+    let msg = "";
+
+    if(total < 40){
+      msg = "💀 This connection may require fasting and strategy";
+    } else if(total < 70){
+      msg = "👀 Interesting… Cupid is observing";
+    } else {
+      msg = "💍 The stars approve this connection";
+    }
+
+    document.getElementById("result").innerHTML =
+      total + "%<br>" + msg;
+
+    document.getElementById("card").style.display="block";
+    document.getElementById("cardText").innerText =
+      "We got " + total + "% on Love Calculator 💖";
+}
+
+/* SHARE (SAFE) */
+function share(){
+
+  let card=document.getElementById("card");
+
+  html2canvas(card).then(canvas=>{
+    let a=document.createElement("a");
+    a.download="love-result.png";
+    a.href=canvas.toDataURL();
+    a.click();
+  });
+
+}
+
+</script>
+
+</body>
+</html>
